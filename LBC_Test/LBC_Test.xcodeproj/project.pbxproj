@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		FE3F8B6C26300C4A00DAFE00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8B6B26300C4A00DAFE00 /* AppDelegate.swift */; };
 		FE3F8B6E26300C4A00DAFE00 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8B6D26300C4A00DAFE00 /* SceneDelegate.swift */; };
-		FE3F8B7026300C4A00DAFE00 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8B6F26300C4A00DAFE00 /* ViewController.swift */; };
+		FE3F8B7026300C4A00DAFE00 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8B6F26300C4A00DAFE00 /* ListViewController.swift */; };
 		FE3F8B7326300C4A00DAFE00 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE3F8B7126300C4A00DAFE00 /* Main.storyboard */; };
 		FE3F8B7626300C4A00DAFE00 /* LBC_Test.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8B7426300C4A00DAFE00 /* LBC_Test.xcdatamodeld */; };
 		FE3F8B7826300C4B00DAFE00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE3F8B7726300C4B00DAFE00 /* Assets.xcassets */; };
@@ -44,7 +44,7 @@
 		FE3F8B6826300C4A00DAFE00 /* LBC_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LBC_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE3F8B6B26300C4A00DAFE00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE3F8B6D26300C4A00DAFE00 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FE3F8B6F26300C4A00DAFE00 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FE3F8B6F26300C4A00DAFE00 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		FE3F8B7226300C4A00DAFE00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FE3F8B7526300C4A00DAFE00 /* LBC_Test.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LBC_Test.xcdatamodel; sourceTree = "<group>"; };
 		FE3F8B7726300C4B00DAFE00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 			children = (
 				FE3F8B6B26300C4A00DAFE00 /* AppDelegate.swift */,
 				FE3F8B6D26300C4A00DAFE00 /* SceneDelegate.swift */,
-				FE3F8B6F26300C4A00DAFE00 /* ViewController.swift */,
+				FE3F8B6F26300C4A00DAFE00 /* ListViewController.swift */,
 				FE3F8BA12630155400DAFE00 /* ProductTableViewCell.swift */,
 				FE3F8BA926301D2E00DAFE00 /* ExtensionUIView.swift */,
 				FE3F8BB126304B6600DAFE00 /* ProductStructure.swift */,
@@ -278,7 +278,7 @@
 			files = (
 				FE3F8BAA26301D2E00DAFE00 /* ExtensionUIView.swift in Sources */,
 				FE3F8BB726304BD100DAFE00 /* ProductService.swift in Sources */,
-				FE3F8B7026300C4A00DAFE00 /* ViewController.swift in Sources */,
+				FE3F8B7026300C4A00DAFE00 /* ListViewController.swift in Sources */,
 				FE3F8B7626300C4A00DAFE00 /* LBC_Test.xcdatamodeld in Sources */,
 				FE3F8BA22630155400DAFE00 /* ProductTableViewCell.swift in Sources */,
 				FE3F8B6C26300C4A00DAFE00 /* AppDelegate.swift in Sources */,
