@@ -16,6 +16,11 @@
 		FE3F8B7B26300C4B00DAFE00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE3F8B7926300C4B00DAFE00 /* LaunchScreen.storyboard */; };
 		FE3F8B8626300C4B00DAFE00 /* LBC_TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8B8526300C4B00DAFE00 /* LBC_TestTests.swift */; };
 		FE3F8B9126300C4B00DAFE00 /* LBC_TestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8B9026300C4B00DAFE00 /* LBC_TestUITests.swift */; };
+		FE3F8BA22630155400DAFE00 /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8BA12630155400DAFE00 /* ProductTableViewCell.swift */; };
+		FE3F8BAA26301D2E00DAFE00 /* ExtensionUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8BA926301D2E00DAFE00 /* ExtensionUIView.swift */; };
+		FE3F8BB226304B6600DAFE00 /* ProductStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8BB126304B6600DAFE00 /* ProductStructure.swift */; };
+		FE3F8BB726304BD100DAFE00 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8BB626304BD100DAFE00 /* ProductService.swift */; };
+		FE3F8BC426304EC900DAFE00 /* ExtensionImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8BC326304EC900DAFE00 /* ExtensionImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,11 @@
 		FE3F8B8C26300C4B00DAFE00 /* LBC_TestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LBC_TestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE3F8B9026300C4B00DAFE00 /* LBC_TestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBC_TestUITests.swift; sourceTree = "<group>"; };
 		FE3F8B9226300C4B00DAFE00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE3F8BA12630155400DAFE00 /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
+		FE3F8BA926301D2E00DAFE00 /* ExtensionUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIView.swift; sourceTree = "<group>"; };
+		FE3F8BB126304B6600DAFE00 /* ProductStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStructure.swift; sourceTree = "<group>"; };
+		FE3F8BB626304BD100DAFE00 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
+		FE3F8BC326304EC900DAFE00 /* ExtensionImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +114,11 @@
 				FE3F8B6B26300C4A00DAFE00 /* AppDelegate.swift */,
 				FE3F8B6D26300C4A00DAFE00 /* SceneDelegate.swift */,
 				FE3F8B6F26300C4A00DAFE00 /* ViewController.swift */,
+				FE3F8BA12630155400DAFE00 /* ProductTableViewCell.swift */,
+				FE3F8BA926301D2E00DAFE00 /* ExtensionUIView.swift */,
+				FE3F8BB126304B6600DAFE00 /* ProductStructure.swift */,
+				FE3F8BB626304BD100DAFE00 /* ProductService.swift */,
+				FE3F8BC326304EC900DAFE00 /* ExtensionImageView.swift */,
 				FE3F8B7126300C4A00DAFE00 /* Main.storyboard */,
 				FE3F8B7726300C4B00DAFE00 /* Assets.xcassets */,
 				FE3F8B7926300C4B00DAFE00 /* LaunchScreen.storyboard */,
@@ -261,9 +276,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE3F8BAA26301D2E00DAFE00 /* ExtensionUIView.swift in Sources */,
+				FE3F8BB726304BD100DAFE00 /* ProductService.swift in Sources */,
 				FE3F8B7026300C4A00DAFE00 /* ViewController.swift in Sources */,
 				FE3F8B7626300C4A00DAFE00 /* LBC_Test.xcdatamodeld in Sources */,
+				FE3F8BA22630155400DAFE00 /* ProductTableViewCell.swift in Sources */,
 				FE3F8B6C26300C4A00DAFE00 /* AppDelegate.swift in Sources */,
+				FE3F8BC426304EC900DAFE00 /* ExtensionImageView.swift in Sources */,
+				FE3F8BB226304B6600DAFE00 /* ProductStructure.swift in Sources */,
 				FE3F8B6E26300C4A00DAFE00 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
