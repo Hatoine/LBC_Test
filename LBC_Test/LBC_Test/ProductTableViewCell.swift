@@ -55,7 +55,14 @@ class ProductTableViewCell: UITableViewCell {
             productPrice.text = String(product?.price ?? Int()) + "€"
             productCategory.text = String(product?.category_id ?? Int())
             guard let imageURL = product?.images_url?.thumb else { return }
-            productImage.loadImageUsingCacheWithUrlString(imageURL)
+            if imageURL != "" {
+
+                productImage.loadImageUsingCacheWithUrlString(imageURL)
+            } else {
+                productImage.backgroundColor = .lightGray
+
+            }
+            
             guard let urgency = product?.is_urgent else { return }
             imageUrgency(isUrgent: urgency)
             guard let id  = product?.category_id else { return }
