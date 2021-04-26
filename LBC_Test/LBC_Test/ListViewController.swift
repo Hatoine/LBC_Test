@@ -30,15 +30,19 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Annonces"
+        view.backgroundColor = .lightGray
+        navigationController?.navigationBar.backgroundColor = .blue
         productTableView.refreshControl = refresher
         productTableView.delegate = self
         productTableView.dataSource = self
         productTableView.register(ProductTableViewCell.self, forCellReuseIdentifier: ProductTableViewCell.identifier)
         view.addSubview(productTableView)
         productTableView.translatesAutoresizingMaskIntoConstraints = false
-        productTableView.topAnchor.constraint(equalTo:view.topAnchor,constant: 90).isActive = true
+        productTableView.topAnchor.constraint(equalTo:view.topAnchor,constant: 180).isActive = true
         productTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         productTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         productTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -52,7 +56,9 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.productArray = products
                 self.productTableView.reloadData()
             } else {
-                print("error")
+                DispatchQueue.main.async {
+                    self.showAlert(alert:.alertNetworkMessage)
+                }
             }
         }
     }
@@ -61,15 +67,28 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewWillAppear(true)
         getProductsInfos()
         productTableView.rowHeight = UITableView.automaticDimension
+        if #available(iOS 13.0, *) {
+            segmentedControl.selectedSegmentTintColor = UIColor.systemYellow
+        } else {
+            // Fallback on earlier versions
+        }
+        segmentedControl.selectedSegmentIndex = 0
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.addSubview(segmentedControl)
         view.addSubview(scrollView)
+        view.addSubview(sView)
         NSLayoutConstraint.activate([
-                 scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                 scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 30),
                  scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                  scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                  scrollView.heightAnchor.constraint(equalToConstant: 50),
-                 
+             ])
+        
+        NSLayoutConstraint.activate([
+            segmentedControl.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            segmentedControl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            segmentedControl.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
              ])
          }
     
@@ -88,6 +107,11 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         return scrollView
+    }()
+    
+    let sView: UIView = {
+        let view = UIView()
+        return view
     }()
   
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -130,7 +154,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         default:
             break
         }
-        return productArray.count
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -178,18 +202,66 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
             
         return cell
+        
         }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 130
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Liste des produits"
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let productsArraySortedByDate = productArray.sorted{ $0.creation_date! > $1.creation_date!}
+        let productsArraySortedByDateAndPriority = productsArraySortedByDate.sorted{ $1.is_urgent! && !$0.is_urgent!}
+        switch segmentedControl.selectedSegmentIndex{
+        case 0:
+            product = productsArraySortedByDateAndPriority[indexPath.row]
+        case 1:
+            let vehiculesArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 1 }
+            product = vehiculesArray[indexPath.row]
+        case 2:
+            let fashionArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 2 }
+            product = fashionArray[indexPath.row]
+        case 3:
+            let toolsArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 3 }
+            product = toolsArray[indexPath.row]
+        case 4:
+            let homeArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 4 }
+            product = homeArray[indexPath.row]
+        case 5:
+            let entertainementArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 5 }
+            product = entertainementArray[indexPath.row]
+        case 6:
+            let eastateArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 6 }
+            product = eastateArray[indexPath.row]
+        case 7:
+            let booksArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 7 }
+            product = booksArray[indexPath.row]
+        case 8:
+            let techArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 8 }
+            product = techArray[indexPath.row]
+        case 9:
+            let serviceArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 9 }
+            product = serviceArray[indexPath.row]
+        case 10:
+            let petsArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 10 }
+            product = petsArray[indexPath.row]
+        case 11:
+            let kidsArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 11 }
+            product = kidsArray[indexPath.row]
+        default:
+            break
+        }
+        let destination = DetailViewController()
+        destination.detailProduct = product
+        present(destination, animated: true, completion: nil)
+    }
   
 //    let items  = ["Toutes", "Mode", "Bricolage", "Maison",  "Loisirs", "Immobilier", "Livres/CD/DVD", "Multimédia","Service","Animaux","Enfants"]
-    
+//
 //    let all = UIButton().createSegmentedControlButton(setTitle: "Toutes")
 //
 //    let fashion = UIButton().createSegmentedControlButton(setTitle: "Mode")
@@ -214,7 +286,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 //
 //    let segmentedControlBackgroundColor = UIColor.init(white: 0.1, alpha: 0.1)
 //
-//    lazy var segmentedControl = UISegmentedControl(items: items)
+//  //  lazy var segmentedControl = UISegmentedControl(items: items)
 //
 //
 //    @objc func handleSegmentedControlButtons(sender: UIButton) {
@@ -262,7 +334,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 //            kids
 //        ]
 //
-//        segmentedControlButtons.forEach {$0.addTarget(self, action: #selector(handleSegmentedControlButtons(sender:)), for: .valueChanged)}
+//        segmentedControlButtons.forEach {$0.addTarget(self, action: #selector(handleSegmentedControlButtons(sender:)), for: .touchUpInside)}
 //
 //        let stackView = UIStackView(arrangedSubviews: segmentedControlButtons)
 //        stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -329,6 +401,5 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        button.layer.borderColor = UIColor.black.cgColor
 //        return button
 //    }
-    
 }
 

@@ -116,7 +116,7 @@ class ProductTableViewCell: UITableViewCell {
         contentView.addSubview(productUrgencyImage)
         productImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
         productLablel.anchor(top: topAnchor, left: productImage.rightAnchor, bottom: nil, right:nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width * 0.5, height: 0, enableInsets: false)
-        productCategory.anchor(top: productLablel.bottomAnchor, left: productImage.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 3, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
+        productCategory.anchor(top: productLablel.bottomAnchor, left: productImage.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 3, paddingLeft: 10, paddingBottom: 10, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
         productPrice.anchor(top: topAnchor, left: productUrgencyImage.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 3, paddingLeft: 10, paddingBottom: 5, paddingRight: 5, width: 70, height: 0, enableInsets: true)
         productUrgencyImage.anchor(top: topAnchor, left: productLablel.rightAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0, enableInsets: false)
     }
