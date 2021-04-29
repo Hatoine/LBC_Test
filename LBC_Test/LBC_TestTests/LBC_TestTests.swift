@@ -9,25 +9,88 @@ import XCTest
 @testable import LBC_Test
 
 class LBC_TestTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        
+    func testGetProductsShouldPostFailedCallbackIfError() {
+        // Given
+        let productService = ProductService(
+            session: URLSessionFake(data: nil, response: nil, error: FakeResponseData.error))
+        // When
+         let expectation = XCTestExpectation(description: "Wait for queue change.")
+        productService.getProducts { (success, products) in
+            XCTAssertFalse(success)
+            XCTAssertNil(products)
+            expectation.fulfill()
         }
+        wait(for: [expectation], timeout: 0.01)
+    }
+    
+    func testGetProductsShouldPostFailedCallbackIfNoData() {
+        // Given
+        let productService = ProductService(
+            session: URLSessionFake(data: nil, response: nil, error: nil))
+        // When
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+        productService.getProducts (callBack: { (success, products) in
+            // Then
+            XCTAssertFalse(success)
+            XCTAssertNil(products)
+            expectation.fulfill()
+        })
+
+        wait(for: [expectation], timeout: 0.01)
+
     }
 
-}
+    func testGetProductsShouldPostFailedCallbackIfIncorrectData() {
+        // Given
+        let productService = ProductService(
+            session: URLSessionFake(data: FakeResponseData.incorrectData, response: FakeResponseData.responseOK, error: nil))
+        // When
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+        productService.getProducts (callBack: { (success, products) in
+            // Then
+            XCTAssertFalse(success)
+            XCTAssertNil(products)
+            expectation.fulfill()
+        })
+
+        wait(for: [expectation], timeout: 0.01)
+    }
+
+    func testGetProductsShouldPostFailedCallbackIfIncorrectResponse() {
+        // Given
+        let productService = ProductService(
+            session: URLSessionFake(data: FakeResponseData.productsCorrectData, response: FakeResponseData.responseKO, error: nil))
+        // When
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+
+        productService.getProducts(callBack: { (success, products) in
+            // Then
+            XCTAssertFalse(success)
+            XCTAssertNil(products)
+            expectation.fulfill()
+        })
+
+        wait(for: [expectation], timeout: 0.01)
+    }
+
+    func testGetProductsShouldPostFailedCallbackIfNoErrorAndCorrectData() {
+        // Given
+        let productService = ProductService(
+            session: URLSessionFake(data: FakeResponseData.productsCorrectData, response: FakeResponseData.responseOK, error: nil))
+        // When
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+        productService.getProducts(callBack: { (success, products) in
+            // Then
+            let products = "ordinateur"
+            XCTAssertEqual(products,products)
+            XCTAssertTrue(success)
+            XCTAssertNotNil(products)
+            expectation.fulfill()
+        })
+
+        wait(for: [expectation], timeout: 0.01)
+    }
+    }
+
+

@@ -6,21 +6,20 @@
 //
 
 import UIKit
-import TinyConstraints
 
 class DetailViewController: UIViewController {
     
     var product: Products?
     let scrollView = DScrollView()
     let scrollViewContainer = DScrollViewContainer(axis: .vertical, spacing: 10)
-    let scrollViewContainerElement = DScrollViewElement(height:1000, backgroundColor: .white)
+    lazy var scrollViewContainerElement = DScrollViewElement()
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addScrollView(scrollView, withSafeArea: .none, hasStatusBarCover: true, statusBarBackgroundColor: .white
                            , container: scrollViewContainer, elements: [scrollViewContainerElement])
         view.backgroundColor = .white
-    
         scrollViewContainerElement.addSubview(productImage)
         scrollViewContainerElement.addSubview(productTitleLabel)
         scrollViewContainerElement.addSubview(productPriceLabel)
@@ -35,7 +34,7 @@ class DetailViewController: UIViewController {
         scrollViewContainerElement.addSubview(productUrgencyImage)
 
 
-        productImage.anchor(top: scrollViewContainerElement.topAnchor, left: scrollViewContainerElement.leftAnchor, bottom: productTitleLabel.topAnchor, right: scrollViewContainerElement.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 20, paddingRight: 0, width: 0, height: 0, enableInsets: false)
+        productImage.anchor(top: scrollViewContainerElement.topAnchor, left: scrollViewContainerElement.leftAnchor, bottom: productTitleLabel.topAnchor, right: scrollViewContainerElement.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 20, paddingRight: 0, width: 0, height: 0, enableInsets: false)
 
         productTitleLabel.anchor(top: productImage.bottomAnchor, left: scrollViewContainerElement.leftAnchor, bottom: productUrgencyImage.topAnchor, right: scrollViewContainerElement.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: 0, height: 0, enableInsets: false)
         
@@ -57,7 +56,7 @@ class DetailViewController: UIViewController {
         
         categoryImage.anchor(top: productIdLabel.bottomAnchor, left: scrollViewContainerElement.leftAnchor, bottom: categoryLabel.topAnchor, right: scrollViewContainerElement.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 24, enableInsets: false)
 
-        categoryLabel.anchor(top: categoryImage.bottomAnchor, left: scrollViewContainerElement.leftAnchor, bottom: nil, right: scrollViewContainerElement.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0, enableInsets: false)
+        categoryLabel.anchor(top: categoryImage.bottomAnchor, left: scrollViewContainerElement.leftAnchor, bottom: scrollViewContainerElement.bottomAnchor, right: scrollViewContainerElement.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 0, enableInsets: false)
 
         guard let imageURL = product?.images_url?.thumb else { return }
         guard let price = product?.price else { return }
@@ -84,11 +83,13 @@ class DetailViewController: UIViewController {
         productPriceLabel.text = "Prix:" + " " + String(price) + " " + "€"
         productIdLabel.text = "Annonce: id" + String(id)
         productsCategories(id: category)
+        productUrgencyImage.image = (product?.is_urgent == true) ? UIImage(named:"urgent2") : UIImage()
+        
     }
   
     let productImage: UIImageView = {
         let productImage = UIImageView()
-        productImage.contentMode = .scaleToFill
+        productImage.contentMode = .scaleAspectFit
         productImage.clipsToBounds = true
         return productImage
     }()

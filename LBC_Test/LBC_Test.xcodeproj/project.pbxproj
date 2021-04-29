@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,13 +21,16 @@
 		FE3F8BB226304B6600DAFE00 /* ProductStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8BB126304B6600DAFE00 /* ProductStructure.swift */; };
 		FE3F8BB726304BD100DAFE00 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8BB626304BD100DAFE00 /* ProductService.swift */; };
 		FE3F8BC426304EC900DAFE00 /* ExtensionImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F8BC326304EC900DAFE00 /* ExtensionImageView.swift */; };
+		FE45E91A263A9B15009CFDA5 /* FakeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE45E919263A9B15009CFDA5 /* FakeResponseData.swift */; };
+		FE45E91F263A9B4F009CFDA5 /* UrlFakeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE45E91E263A9B4F009CFDA5 /* UrlFakeSession.swift */; };
+		FE45E954263AA44E009CFDA5 /* Products.json in Resources */ = {isa = PBXBuildFile; fileRef = FE45E953263AA44E009CFDA5 /* Products.json */; };
+		FE45E955263AA44E009CFDA5 /* Products.json in Resources */ = {isa = PBXBuildFile; fileRef = FE45E953263AA44E009CFDA5 /* Products.json */; };
 		FE8D95752633173B00640C1A /* ExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8D95742633173B00640C1A /* ExtensionViewController.swift */; };
 		FE8D957A2633176200640C1A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8D95792633176200640C1A /* Alerts.swift */; };
 		FE95025326382ED1007C10CF /* DScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE95025226382ED1007C10CF /* DScrollView.swift */; };
 		FE95025826382ED9007C10CF /* DScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE95025726382ED9007C10CF /* DScrollView+.swift */; };
 		FE95025D26382EE1007C10CF /* DScrollViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE95025C26382EE1007C10CF /* DScrollViewContainer.swift */; };
 		FE95026226382EE7007C10CF /* DScrollViewElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE95026126382EE7007C10CF /* DScrollViewElement.swift */; };
-		FE950268263836C2007C10CF /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = FE950267263836C2007C10CF /* TinyConstraints */; };
 		FEAB57A426369CF600134836 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAB57A326369CF600134836 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +72,9 @@
 		FE3F8BB126304B6600DAFE00 /* ProductStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStructure.swift; sourceTree = "<group>"; };
 		FE3F8BB626304BD100DAFE00 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		FE3F8BC326304EC900DAFE00 /* ExtensionImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionImageView.swift; sourceTree = "<group>"; };
+		FE45E919263A9B15009CFDA5 /* FakeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponseData.swift; sourceTree = "<group>"; };
+		FE45E91E263A9B4F009CFDA5 /* UrlFakeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlFakeSession.swift; sourceTree = "<group>"; };
+		FE45E953263AA44E009CFDA5 /* Products.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Products.json; sourceTree = "<group>"; };
 		FE8D95742633173B00640C1A /* ExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionViewController.swift; sourceTree = "<group>"; };
 		FE8D95792633176200640C1A /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		FE95025226382ED1007C10CF /* DScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DScrollView.swift; sourceTree = "<group>"; };
@@ -83,7 +89,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE950268263836C2007C10CF /* TinyConstraints in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +144,9 @@
 				FE3F8B7926300C4B00DAFE00 /* LaunchScreen.storyboard */,
 				FE3F8B7C26300C4B00DAFE00 /* Info.plist */,
 				FE3F8B7426300C4A00DAFE00 /* LBC_Test.xcdatamodeld */,
+				FE45E919263A9B15009CFDA5 /* FakeResponseData.swift */,
+				FE45E91E263A9B4F009CFDA5 /* UrlFakeSession.swift */,
+				FE45E953263AA44E009CFDA5 /* Products.json */,
 			);
 			path = LBC_Test;
 			sourceTree = "<group>";
@@ -202,7 +210,6 @@
 			);
 			name = LBC_Test;
 			packageProductDependencies = (
-				FE950267263836C2007C10CF /* TinyConstraints */,
 			);
 			productName = LBC_Test;
 			productReference = FE3F8B6826300C4A00DAFE00 /* LBC_Test.app */;
@@ -276,7 +283,6 @@
 			);
 			mainGroup = FE3F8B5F26300C4A00DAFE00;
 			packageReferences = (
-				FE950266263836C2007C10CF /* XCRemoteSwiftPackageReference "TinyConstraints" */,
 			);
 			productRefGroup = FE3F8B6926300C4A00DAFE00 /* Products */;
 			projectDirPath = "";
@@ -295,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE3F8B7B26300C4B00DAFE00 /* LaunchScreen.storyboard in Resources */,
+				FE45E954263AA44E009CFDA5 /* Products.json in Resources */,
 				FE3F8B7826300C4B00DAFE00 /* Assets.xcassets in Resources */,
 				FE3F8B7326300C4A00DAFE00 /* Main.storyboard in Resources */,
 			);
@@ -304,6 +311,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE45E955263AA44E009CFDA5 /* Products.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,10 +330,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE3F8BAA26301D2E00DAFE00 /* ExtensionUIView.swift in Sources */,
+				FE45E91F263A9B4F009CFDA5 /* UrlFakeSession.swift in Sources */,
 				FE3F8BB726304BD100DAFE00 /* ProductService.swift in Sources */,
 				FE3F8B7026300C4A00DAFE00 /* ListViewController.swift in Sources */,
 				FE95025826382ED9007C10CF /* DScrollView+.swift in Sources */,
 				FEAB57A426369CF600134836 /* DetailViewController.swift in Sources */,
+				FE45E91A263A9B15009CFDA5 /* FakeResponseData.swift in Sources */,
 				FE95026226382EE7007C10CF /* DScrollViewElement.swift in Sources */,
 				FE95025D26382EE1007C10CF /* DScrollViewContainer.swift in Sources */,
 				FE3F8B7626300C4A00DAFE00 /* LBC_Test.xcdatamodeld in Sources */,
@@ -669,25 +679,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		FE950266263836C2007C10CF /* XCRemoteSwiftPackageReference "TinyConstraints" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/roberthein/TinyConstraints.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		FE950267263836C2007C10CF /* TinyConstraints */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FE950266263836C2007C10CF /* XCRemoteSwiftPackageReference "TinyConstraints" */;
-			productName = TinyConstraints;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FE3F8B7426300C4A00DAFE00 /* LBC_Test.xcdatamodeld */ = {

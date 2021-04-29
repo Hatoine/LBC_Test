@@ -8,12 +8,14 @@
 import UIKit
 
 
-class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating {
     
     let productTableView = UITableView()
     let productService = ProductService()
     private var product: Products?
     var productArray = [Products]()
+    var searchResults = [Products]()
+
     private var productId = Int()
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -21,6 +23,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         refreshControl.addTarget(self, action: #selector(requestData), for: .valueChanged)
         return refreshControl
     }()
+    private let searchController = UISearchController(searchResultsController: nil)
     
     @objc func requestData(){
         let deadline = DispatchTime.now() + .milliseconds(500)
@@ -36,12 +39,17 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         title = "Liste des annonces"
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.6178823709, green: 0.8497449756, blue: 1, alpha: 1)
         navigationController?.navigationBar.titleTextAttributes = [.font : UIFont(name: "Georgia-Bold", size: 20) as Any]
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Rechercher une annonce"
+        searchController.searchBar.setValue("Annuler", forKey: "cancelButtonText")
         scrollView.backgroundColor = .white
         productTableView.refreshControl = refresher
         productTableView.delegate = self
         productTableView.dataSource = self
         productTableView.register(ProductTableViewCell.self, forCellReuseIdentifier: ProductTableViewCell.identifier)
         view.addSubview(productTableView)
+        view.backgroundColor = .white
         productTableView.translatesAutoresizingMaskIntoConstraints = false
         productTableView.topAnchor.constraint(equalTo:view.topAnchor,constant: 130).isActive = true
         productTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -49,17 +57,37 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         productTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
     
+    private func filterContent(searchText:String){
+        searchResults = productArray.filter({ (product) -> Bool in
+            if let description = product.description {
+                let isMatch = description.localizedCaseInsensitiveContains(searchText)
+                return isMatch
+            }
+            return false
+        })
+        
+    }
+    
+    internal func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text{
+            filterContent(searchText: searchText)
+            productTableView.reloadData()
+        }
+    }
     
     fileprivate func getProductsInfos() {
         productService.getProducts { (success,products ) in
-            if success {
-                guard let products = products else { return }
-                self.productArray = products
-                self.productTableView.reloadData()
-            } else {
-                DispatchQueue.main.async {
-                    self.showAlert(alert:.alertNetworkMessage)
+            DispatchQueue.main.async {
+                if success {
+                    guard let products = products else { return }
+                    self.productArray = products
+                    self.productTableView.reloadData()
+                } else {
+                    DispatchQueue.main.async {
+                        self.showAlert(alert:.alertNetworkMessage)
+                    }
                 }
+
             }
         }
     }
@@ -118,7 +146,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch segmentedControl.selectedSegmentIndex{
         case 0:
-             return productArray.count
+            return productArray.count
         case 1:
             let vehiculesArray = productArray.filter { $0.category_id == 1 }
             return vehiculesArray.count
@@ -217,197 +245,57 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let productsArraySortedByDate = productArray.sorted{ $0.creation_date! > $1.creation_date!}
-        let productsArraySortedByDateAndPriority = productsArraySortedByDate.sorted{ $0.is_urgent! && !$1.is_urgent!}
-        switch segmentedControl.selectedSegmentIndex{
-        case 0:
-            product = productsArraySortedByDateAndPriority[indexPath.row]
-        case 1:
-            let vehiculesArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 1 }
-            product = vehiculesArray[indexPath.row]
-        case 2:
-            let fashionArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 2 }
-            product = fashionArray[indexPath.row]
-        case 3:
-            let toolsArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 3 }
-            product = toolsArray[indexPath.row]
-        case 4:
-            let homeArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 4 }
-            product = homeArray[indexPath.row]
-        case 5:
-            let entertainementArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 5 }
-            product = entertainementArray[indexPath.row]
-        case 6:
-            let eastateArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 6 }
-            product = eastateArray[indexPath.row]
-        case 7:
-            let booksArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 7 }
-            product = booksArray[indexPath.row]
-        case 8:
-            let techArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 8 }
-            product = techArray[indexPath.row]
-        case 9:
-            let serviceArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 9 }
-            product = serviceArray[indexPath.row]
-        case 10:
-            let petsArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 10 }
-            product = petsArray[indexPath.row]
-        case 11:
-            let kidsArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 11 }
-            product = kidsArray[indexPath.row]
-        default:
-            break
+                let productsArraySortedByDateAndPriority = productsArraySortedByDate.sorted{ $0.is_urgent! && !$1.is_urgent!}
+                switch segmentedControl.selectedSegmentIndex{
+                case 0:
+                    product = productsArraySortedByDateAndPriority[indexPath.row]
+                case 1:
+                    let vehiculesArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 1 }
+                    product = vehiculesArray[indexPath.row]
+                case 2:
+                    let fashionArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 2 }
+                    product = fashionArray[indexPath.row]
+                case 3:
+                    let toolsArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 3 }
+                    product = toolsArray[indexPath.row]
+                case 4:
+                    let homeArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 4 }
+                    product = homeArray[indexPath.row]
+                case 5:
+                    let entertainementArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 5 }
+                    product = entertainementArray[indexPath.row]
+                case 6:
+                    let eastateArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 6 }
+                    product = eastateArray[indexPath.row]
+                case 7:
+                    let booksArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 7 }
+                    product = booksArray[indexPath.row]
+                case 8:
+                    let techArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 8 }
+                    product = techArray[indexPath.row]
+                case 9:
+                    let serviceArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 9 }
+                    product = serviceArray[indexPath.row]
+                case 10:
+                    let petsArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 10 }
+                    product = petsArray[indexPath.row]
+                case 11:
+                    let kidsArray = productsArraySortedByDateAndPriority.filter { $0.category_id == 11 }
+                    product = kidsArray[indexPath.row]
+                default:
+                    break
         }
-//        if product?.images_url?.thumb == "" {
-//            print("no image")
-//        }
+
         let destination = DetailViewController()
         destination.product = product
         present(destination, animated: true, completion: nil)
     }
-  
-//    let items  = ["Toutes", "Mode", "Bricolage", "Maison",  "Loisirs", "Immobilier", "Livres/CD/DVD", "Multimédia","Service","Animaux","Enfants"]
-//
-//    let all = UIButton().createSegmentedControlButton(setTitle: "Toutes")
-//
-//    let fashion = UIButton().createSegmentedControlButton(setTitle: "Mode")
-//
-//    let tools = UIButton().createSegmentedControlButton(setTitle: "Bricolage")
-//
-//    let home = UIButton().createSegmentedControlButton(setTitle: "Maison")
-//
-//    let entertainment = UIButton().createSegmentedControlButton(setTitle: "Loisirs")
-//
-//    let realEastate = UIButton().createSegmentedControlButton(setTitle: "Immobilier")
-//
-//    let books = UIButton().createSegmentedControlButton(setTitle: "Livres/CD/DVD")
-//
-//    let tech = UIButton().createSegmentedControlButton(setTitle: "Multimédia")
-//
-//    let service = UIButton().createSegmentedControlButton(setTitle: "Service")
-//
-//    let pets = UIButton().createSegmentedControlButton(setTitle: "Animaux")
-//
-//    let kids = UIButton().createSegmentedControlButton(setTitle: "Enfants")
-//
-//    let segmentedControlBackgroundColor = UIColor.init(white: 0.1, alpha: 0.1)
-//
-//  //  lazy var segmentedControl = UISegmentedControl(items: items)
-//
-//
-//    @objc func handleSegmentedControlButtons(sender: UIButton) {
-//        let segmentedControlButtons: [UIButton] = [
-//            all,
-//            fashion,
-//            tools,
-//            home,
-//            entertainment,
-//            realEastate,
-//            books,
-//            tech,
-//            service,
-//            pets,
-//            kids
-//        ]
-//
-//        productTableView.reloadData()
-//
-//        for button in segmentedControlButtons {
-//            if button == sender {
-//                UIView.animate(withDuration: 0.2, delay: 0.1, options: .transitionFlipFromLeft) {
-//                    button.backgroundColor = .white
-//                }
-//            } else {
-//                UIView.animate(withDuration: 0.2, delay: 0.1, options: .transitionFlipFromLeft) { [weak self] in
-//                    button.backgroundColor = self?.segmentedControlBackgroundColor
-//                }
-//            }
-//        }
-//    }
-//
-//    func configureCustomSegmentedControl() {
-//        let segmentedControlButtons: [UIButton] = [
-//            all,
-//            fashion,
-//            tools,
-//            home,
-//            entertainment,
-//            realEastate,
-//            books,
-//            tech,
-//            service,
-//            pets,
-//            kids
-//        ]
-//
-//        segmentedControlButtons.forEach {$0.addTarget(self, action: #selector(handleSegmentedControlButtons(sender:)), for: .touchUpInside)}
-//
-//        let stackView = UIStackView(arrangedSubviews: segmentedControlButtons)
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        stackView.axis = .horizontal
-//        stackView.distribution = .fillEqually
-//
-//        let scrollView = UIScrollView()
-//        scrollView.contentSize = CGSize(width: .zero, height: 50)
-//        scrollView.backgroundColor = segmentedControlBackgroundColor
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        scrollView.addSubview(stackView)
-//
-//        view.addSubview(scrollView)
-//
-//        NSLayoutConstraint.activate([
-//            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            scrollView.heightAnchor.constraint(equalToConstant: 50),
-//            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-//            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-//            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-//            stackView.heightAnchor.constraint(equalToConstant: 40)
-//        ])
-//    }
-//
-//    func configureScrollableSegmentedControl() {
-//
-//        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-//
-//        let scrollView = UIScrollView()
-//        scrollView.contentSize = CGSize(width: .zero, height:50)
-//
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        scrollView.addSubview(segmentedControl)
-//        view.addSubview(scrollView)
-//
-//        NSLayoutConstraint.activate([
-//            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            scrollView.heightAnchor.constraint(equalToConstant: 50),
-//
-//            segmentedControl.topAnchor.constraint(equalTo: scrollView.topAnchor),
-//            segmentedControl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-//            segmentedControl.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-//            segmentedControl.heightAnchor.constraint(equalToConstant: 40)
-//        ])
-//
-//    }
-//}
-//
-//extension UIButton {
-//    func createSegmentedControlButton(setTitle to: String) -> UIButton {
-//        let button = UIButton()
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setTitle(to, for: .normal)
-//        button.setTitleColor(.black, for: .normal)
-//        button.backgroundColor = UIColor.init(white: 0.1, alpha: 0.1)
-//        button.layer.cornerRadius = 6
-//        button.layer.borderWidth = 0.2
-//        button.layer.borderColor = UIColor.black.cgColor
-//        return button
-//    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
 }
 

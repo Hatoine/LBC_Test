@@ -64,12 +64,13 @@ class ProductTableViewCell: UITableViewCell {
             productPrice.text = String(product?.price ?? Int()) + "€"
             productCategory.text = String(product?.category_id ?? Int())
             guard let imageURL = product?.images_url?.thumb else { return }
-            productImage.loadImageUsingCacheWithUrlString(imageURL)
-//            if product?.images_url?.thumb != "" {
-//                productImage.loadImageUsingCacheWithUrlString(product?.images_url?.thumb ?? "")
-//            } else {
-//                productImage.image = UIImage(named: "camera")
-//            }
+           // productImage.loadImageUsingCacheWithUrlString(imageURL)
+            if product?.images_url?.thumb == "" {
+                productImage.image = UIImage(named: "camera")
+            } else {
+                productImage.loadImageUsingCacheWithUrlString(imageURL)
+          
+            }
             productUrgencyImage.image = (product?.is_urgent == true) ? UIImage(named:"urgent2") : UIImage()
             guard let id  = product?.category_id else { return }
             productsCategories(id: id)

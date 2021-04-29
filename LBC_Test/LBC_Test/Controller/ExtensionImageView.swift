@@ -20,8 +20,8 @@ extension UIImageView {
                 self.image = cachedImage
                 return
             }
-            let url = URL(string: urlString) 
-            URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+            guard let url = URL(string: urlString) else { return }
+            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                 if error != nil {
                     print(error ?? "")
                     return

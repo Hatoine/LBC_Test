@@ -23,10 +23,5 @@ struct ImagesURL:Decodable {
     let small, thumb: String?
 }
 
-struct ID: Codable {
-    let id: Int
-    let name: String
-}
-
-typealias Welcome = [ID]
+typealias Welcome = [Products]
 
