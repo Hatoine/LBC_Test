@@ -8,7 +8,9 @@
 import UIKit
 
 extension UIViewController  {
-    /// Show alert with custom message
+    
+    //  MARK: - Extension UIImageController
+
     func showAlert(alert: AlertMessages) {
         let alertVC = UIAlertController(title: "Erreur", message: alert.rawValue , preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -19,5 +21,4 @@ extension UIViewController  {
         textField.resignFirstResponder()
         return true
     }
-
 }

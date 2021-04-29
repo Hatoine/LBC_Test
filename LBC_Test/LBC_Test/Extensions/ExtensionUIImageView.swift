@@ -35,4 +35,9 @@ extension UIImageView {
             }).resume()
         }
     
+    func setImageView(image:UIImageView,contentMode:UIView.ContentMode,clips:Bool,name:String){
+        image.contentMode = contentMode
+        image.clipsToBounds = clips
+        image.image = UIImage(named:name)
+    }
 }
